@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: "HarmonyOS";
+    src: url(./assest/HarmonyOSHans-Medium.woff2) format("woff");
+  }
+}
+
+:root {
+  line-height: 1.5;
+  font-weight: 400;
+  font-family: "HarmonyOS", "Arial", "Helvetica", sans-serif;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+.shadow-md-top {
+  box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.1), 0 -2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.bg-45566f {
+  background: #45566f;
+}
+
+#small-select {
+  font-size: 0.875rem;
+  line-height: 1rem;
+}
