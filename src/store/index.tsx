@@ -1,34 +1,37 @@
 import { createContext, useReducer } from "react";
+import { produce } from "immer";
+import { FORGOTTEN_WORDS, SPEC, Vocabulary } from "./dict";
 
 interface WordStore {
-  forgetWordCount: {
-    [key: string]: number;
-  };
-  vocabulary: {
-    [key: number | string]: string[];
-  };
+  partKey: string;
+  forgetWordCount: Record<string, number>;
+  vocabulary: Vocabulary;
   lesson: string;
   words: string[];
 }
 
-const wordsReducer = (store: any, action: any) => {
+const wordsReducer = (store: WordStore, action: any) => {
   switch (action.type) {
     case "changeLesson": {
-      const vocabularyKey = action.val.replace("Lesson", "").replace("ALL", 0);
-      return {
-        ...store,
-        lesson: action.val,
-        words: store.vocabulary[vocabularyKey],
-      };
+      const { currentSelection, currSelectPartKey } = action.val;
+      const lessonKey = currentSelection
+        .replace("Lesson", "")
+        .replace("ALL", 0);
+      return produce(store, (draftStore: WordStore) => {
+        draftStore.partKey = currSelectPartKey;
+        draftStore.lesson = currentSelection;
+        draftStore.words = draftStore.vocabulary[currSelectPartKey][lessonKey];
+      });
     }
-    case "changeVocabulary": {
-      return {
-        ...store,
-        vocabulary: action.val,
-        lesson: "ALL",
-        words: action.val[0],
-      };
+
+    case "initalVocabulary": {
+      return produce(store, (draftStore: any) => {
+        draftStore.vocabulary = action.val;
+        draftStore.lesson = "ALL";
+        draftStore.words = action.val[draftStore.partKey][0] || [];
+      });
     }
+
     case "markAsForget": {
       const updateCountObj = { ...store.forgetWordCount };
       updateCountObj[action.val] = updateCountObj[action.val]
@@ -46,18 +49,20 @@ const wordsReducer = (store: any, action: any) => {
 
       localStorage.setItem("forgetWordCount", JSON.stringify(sortedWordCount));
 
-      return {
-        ...store,
-        forgetWordCount: sortedWordCount,
-      };
+      return produce(store, (draftStore: any) => {
+        draftStore.forgetWordCount = sortedWordCount;
+      });
     }
+
     case "clearForgetList": {
-      localStorage.removeItem('forgetWordCount')
-      return {
-        ...store,
-        forgetWordCount: {},
-      };
+      localStorage.removeItem("forgetWordCount");
+      return produce(store, (draftStore: any) => {
+        draftStore.forgetWordCount = {};
+        draftStore.vocabulary[SPEC][FORGOTTEN_WORDS] = {};
+        draftStore.words = [];
+      });
     }
+
     default: {
       throw Error("unknown actions: " + action.type);
     }
@@ -65,8 +70,9 @@ const wordsReducer = (store: any, action: any) => {
 };
 
 const initialWordStore: WordStore = {
-  vocabulary: {},
+  partKey: "2", // 当前默认选择的词库
   lesson: "ALL",
+  vocabulary: {},
   words: [],
   forgetWordCount: localStorage.getItem("forgetWordCount")
     ? JSON.parse(localStorage.getItem("forgetWordCount") as string)

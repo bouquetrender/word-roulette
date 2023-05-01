@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { WordsContext, WordsDispatchContext } from "../store";
 
 const initialText = "Keep on keeping on.";
-const resetText = "Reset Completed.";
+const resetText = "Reset Completed";
 const finishText = "You have completed this round of word review !";
 
 const shuffleArray = (arr: string[]) => {
@@ -34,18 +34,15 @@ const useWordManager = () => {
 
   const mark = () => {
     dispatch({
-      type: 'markAsForget',
-      val: currentWord
-    })
-    rouletteNext()
-  }
+      type: "markAsForget",
+      val: currentWord,
+    });
+    rouletteNext();
+  };
 
   const restart = () => {
     setCurrentWord(resetText);
     reset();
-    setTimeout(() => {
-      setCurrentWord(initialText);
-    }, 1000);
   };
 
   const finish = () => {
@@ -60,7 +57,7 @@ const useWordManager = () => {
 
   const start = () => {
     if (currentWordGroup.length === 0) {
-      return alert("Please Select Lesson");
+      return alert("The current list of words is empty. Please select again.");
     }
     setState(true);
     setBtnText("Next");
@@ -78,9 +75,6 @@ const useWordManager = () => {
   };
 
   const rouletteNext = () => {
-    if (!state) {
-      start();
-    }
     if (state) {
       if (currentWordGroup.length === 0) {
         finish();
@@ -88,8 +82,10 @@ const useWordManager = () => {
       } else {
         nextWords();
       }
+    } else {
+      start();
     }
-  }
+  };
 
   return {
     btnText,
@@ -102,7 +98,7 @@ const useWordManager = () => {
     start,
     nextWords,
     mark,
-    rouletteNext
+    rouletteNext,
   };
 };
 

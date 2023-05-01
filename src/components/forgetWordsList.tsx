@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { WordsContext, WordsDispatchContext } from "../store";
+import { FORGOTTEN_WORDS } from "../store/dict";
 
 const ForgetWordsList = () => {
   const store = useContext(WordsContext);
@@ -15,7 +16,7 @@ const ForgetWordsList = () => {
 
   return (
     <div className="text-2xl text-zinc-200 w-full text-center h-full overflow-auto py-16 max-w-lg">
-      <div className="text-4xl mb-6">Memory Lapse Lexicon</div>
+      <div className="text-4xl mb-6">{FORGOTTEN_WORDS}</div>
       {keys.length > 0 && (
         <div
           className="text-xl mb-6 cursor-pointer opacity-40 hover:opacity-100 inline-block transition"
@@ -27,7 +28,7 @@ const ForgetWordsList = () => {
       {keys.length > 0 &&
         keys.map((words) => {
           return (
-            <div className="flex justify-between">
+            <div key={words} className="flex justify-between">
               <div>{words}</div>
               <div className=" pr-2">{store.forgetWordCount[words]}</div>
             </div>
