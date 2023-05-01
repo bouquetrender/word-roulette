@@ -5,9 +5,15 @@
 @layer base {
   @font-face {
     font-family: "HarmonyOS";
-    src: url(./assest/HarmonyOSHans-Medium.woff2) format("woff");
+    src: url(./assest/HarmonyOS.woff2) format("woff");
+  }
+
+  @font-face {
+    font-family: "Raleway";
+    src: url(./assest/Raleway.woff2) format("woff");
   }
 }
+
 
 :root {
   line-height: 1.5;
@@ -29,12 +35,18 @@ body {
   margin: 0;
 }
 
+.font-raleway{
+  font-family: "Raleway", "Arial", "Helvetica", sans-serif !important;
+}
+
 .shadow-md-top {
   box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.1), 0 -2px 4px -2px rgb(0 0 0 / 0.1);
 }
-
-.bg-45566f {
-  background: #45566f;
+.shadow-md-right {
+  box-shadow: 4px 0 6px -1px rgb(0 0 0 / 0.1), 2px 0 4px -2px rgb(0 0 0 / 0.1);
+}
+.shadow-md-left {
+  box-shadow: -4px 0 6px -1px rgb(0 0 0 / 0.1), -2px 0 4px -2px rgb(0 0 0 / 0.1);
 }
 
 #small-select {

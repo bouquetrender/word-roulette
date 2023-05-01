@@ -5,25 +5,33 @@ interface vocabulary {
 const vocabulary: vocabulary = {
   1: [
     "rudely",
-    "bear it / stand it",
+    "bear / stand it",
     "attract / catch / draw one's attention",
     "eventually",
-    "cross / unhappy",
+    "cross",
   ],
-  2: ["breakfest / lunch / brunch / supper", "frequently", "rarely"],
+  2: ["supper", "frequently", "rarely"],
   3: [
     "send for a doctor",
-    "post office / postbox",
+    "postbox",
     "spoil spolied spoilt",
-    "Don't spoil your children.",
-    "The food will spoil soon.",
-    "spoil my holiday.",
-    "spoil / damage / destory / ruin",
+    "Don't spoil your children",
+    "The food will spoil soon",
+    "spoil my holiday",
+    "ruin",
     "public opinions",
     "waiter / waitress",
     "borrow / lend",
     "whole milk",
+    "salt",
+    "stay up late",
   ],
+  4: [
+    "firm",
+    "abroad",
+    "a great/large number of",
+    "society",
+  ]
 };
 
 const lessonKey = Object.keys(vocabulary);

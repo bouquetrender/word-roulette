@@ -1,0 +1,116 @@
+import { useEffect, useState } from "react";
+import Drawer from "./components/drawer";
+import ChangeLesson from "./ChangeLesson";
+
+interface TopDrawer {
+  open: boolean;
+  onClose: () => void;
+  gameStarted: boolean;
+}
+
+const superTitle = "Word Roulette".toUpperCase();
+const changeLesson = "Change Lesson";
+const exportTitle = "Export";
+const aboutTitle = "about";
+
+const TopDrawer = (props: TopDrawer) => {
+  const [title, setTitle] = useState(superTitle);
+  const [printIt, setPrintIt] = useState("");
+
+  const btnList = [
+    {
+      disabled: props.gameStarted,
+      content: changeLesson,
+      onClick: () => {
+        if (!props.gameStarted) {
+          setTitle("Change Lesson");
+        }
+      },
+    },
+    {
+      content: exportTitle,
+      onClick: () => {
+        console.log();
+      },
+    },
+    {
+      content: aboutTitle,
+      onClick: () => {
+        console.log();
+      },
+    },
+    {
+      content: "Exit",
+      onClick: () => {
+        props.onClose();
+      },
+    },
+  ];
+
+  const onClose = () => {
+    props.onClose();
+
+    setTimeout(() => {
+      setTitle(superTitle);
+    }, 500);
+  };
+
+  const onBack = () => {
+    setTitle(superTitle);
+  };
+
+  useEffect(() => {
+    setPrintIt("");
+    const delay = 20;
+    let i = -1;
+
+    const intervalId = setInterval(() => {
+      if (i >= title.length) {
+        clearInterval(intervalId);
+        return;
+      }
+      setPrintIt((prevVal) => {
+        return prevVal + title.charAt(i);
+      });
+      i++;
+    }, delay);
+  }, [title]);
+
+  return (
+    <Drawer
+      shadowNode={true}
+      open={props.open}
+      onClose={onClose}
+      position="top"
+    >
+      <div className="h-full w-4/5 min-[1040px]:w-1/2 mx-auto pt-48 pb-48 text-center min-[1040px]:text-left">
+        <div className="text-5xl min-[1040px]:text-6xl mb-5 font-raleway select-none h-[60px]">
+          {printIt}
+        </div>
+
+        {title === superTitle &&
+          btnList.map((btn) => (
+            <div
+              key={btn.content}
+              className={`text-2xl mt-6 ${
+                btn.disabled ? "cursor-not-allowed" : "cursor-pointer"
+              }`}
+              onClick={btn.onClick}
+            >
+              <span
+                className={`${
+                  btn.disabled ? "text-zinc-500" : "hover:underline"
+                }`}
+              >
+                {btn.content}
+              </span>
+            </div>
+          ))}
+
+        {title === changeLesson && <ChangeLesson onBack={onBack} />}
+      </div>
+    </Drawer>
+  );
+};
+
+export default TopDrawer;
