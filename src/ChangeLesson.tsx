@@ -52,22 +52,27 @@ const ChangeLesson = (props: Props) => {
 
   return (
     <>
-      <div className="flex">
-        {tabList.map((item, index) => {
-          return (
-            <div
-              key={item.name}
-              onClick={item.onClick}
-              className={`select-none h-11 -mb-[2px] border-2 w-16 leading-[2.7rem] text-center ${
-                currSelectPartKey === item.name
-                  ? "bg-[#E5E7EB] text-zinc-600"
-                  : "cursor-pointer"
-              } ${tabList.length === index + 1 ? "" : "border-r-0"}`}
-            >
-              {item.name}
-            </div>
-          );
-        })}
+      <div className="flex justify-between items-center">
+        <div className="flex flex-row">
+          {tabList.map((item, index) => {
+            return (
+              <div
+                key={item.name}
+                onClick={item.onClick}
+                className={`select-none h-11 leading-[2.7rem] -mb-[2px] border-2 w-16 text-center ${
+                  currSelectPartKey === item.name
+                    ? "bg-[#E5E7EB] text-zinc-600"
+                    : "cursor-pointer"
+                } ${tabList.length === index + 1 ? "" : "border-r-0"}`}
+              >
+                {item.name}
+              </div>
+            );
+          })}
+        </div>
+        <div className="hidden md:block">
+          /system/roulette/data/{currSelectPartKey}
+        </div>
       </div>
 
       <div className=" text-xl border-2 rounded-tr rounded-br rounded-bl h-2/3 overflow-y-auto p-4">
@@ -101,6 +106,12 @@ const ChangeLesson = (props: Props) => {
         <div>[ {store.lesson} ]</div>
         <div>
           <span className="cursor-pointer hover:underline" onClick={onBack}>
+            Import
+          </span>
+          <span
+            className="cursor-pointer hover:underline ml-8"
+            onClick={onBack}
+          >
             Close
           </span>
           <span

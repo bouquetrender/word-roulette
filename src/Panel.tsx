@@ -70,9 +70,9 @@ const MainPanel = () => {
   useDebounceEffect(
     () => {
       const handleKeyDown = (event: { key: string }) => {
-        if (event.key.toLocaleLowerCase() === "i") {
+        if (event.key.toLocaleLowerCase() === "escape") {
           drawerOpenStatus.top = !drawerOpenStatus.top;
-        } else if (event.key === "ArrowRight") {
+        } else if (event.key.toLocaleLowerCase() === "arrowright") {
           rouletteNext();
         } else if (event.key.toLocaleLowerCase() === "r") {
           restart();

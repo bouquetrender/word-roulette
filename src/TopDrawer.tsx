@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Drawer from "./components/drawer";
 import ChangeLesson from "./ChangeLesson";
 import { useDebounceEffect } from "ahooks";
@@ -60,6 +60,12 @@ const TopDrawer = (props: TopDrawer) => {
     setTitle(superTitle);
   };
 
+  useEffect(() => {
+    if (!props.open) {
+      setTitle(superTitle)
+    }
+  }, [props.open])
+
   useDebounceEffect(
     () => {
       setPrintIt("");
@@ -88,7 +94,7 @@ const TopDrawer = (props: TopDrawer) => {
       onClose={onClose}
       position="top"
     >
-      <div className="h-full w-4/5 min-[1040px]:w-1/2 mx-auto pt-40 pb-40 text-center min-[1040px]:text-left">
+      <div className="h-full w-4/5 min-[1040px]:w-1/2 mx-auto pt-40 pb-40 text-left">
         <div className="text-5xl min-[1040px]:text-6xl mb-5 font-raleway select-none h-[60px]">
           {printIt}
         </div>
