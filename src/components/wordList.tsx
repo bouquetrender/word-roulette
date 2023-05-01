@@ -27,7 +27,7 @@ const ForgetWordsList = () => {
       {keys.length > 0 &&
         keys.map((words) => {
           return (
-            <div className="flex justify-between">
+            <div key={words} className="flex justify-between">
               <div>{words}</div>
               <div className=" pr-2">{store.forgetWordCount[words]}</div>
             </div>

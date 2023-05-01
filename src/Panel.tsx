@@ -60,7 +60,7 @@ const MainPanel = () => {
 
   useMount(() => {
     dispatch({
-      type: "changeVocabulary",
+      type: "initalVocabulary",
       val: vocabulary,
     });
 

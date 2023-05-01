@@ -1,6 +1,7 @@
 import { createContext, useReducer } from "react";
 
 interface WordStore {
+  partKey: string;
   forgetWordCount: {
     [key: string]: number;
   };
@@ -14,19 +15,19 @@ interface WordStore {
 const wordsReducer = (store: any, action: any) => {
   switch (action.type) {
     case "changeLesson": {
-      const vocabularyKey = action.val.replace("Lesson", "").replace("ALL", 0);
+      const lessonKey = action.val.replace("Lesson", "").replace("ALL", 0);
       return {
         ...store,
         lesson: action.val,
-        words: store.vocabulary[vocabularyKey],
+        words: store.vocabulary[store.partKey][lessonKey],
       };
     }
-    case "changeVocabulary": {
+    case "initalVocabulary": {
       return {
         ...store,
         vocabulary: action.val,
         lesson: "ALL",
-        words: action.val[0],
+        words: action.val[store.partKey][0],
       };
     }
     case "markAsForget": {
@@ -52,7 +53,7 @@ const wordsReducer = (store: any, action: any) => {
       };
     }
     case "clearForgetList": {
-      localStorage.removeItem('forgetWordCount')
+      localStorage.removeItem("forgetWordCount");
       return {
         ...store,
         forgetWordCount: {},
@@ -65,8 +66,9 @@ const wordsReducer = (store: any, action: any) => {
 };
 
 const initialWordStore: WordStore = {
-  vocabulary: {},
+  partKey: "2",
   lesson: "ALL",
+  vocabulary: {},
   words: [],
   forgetWordCount: localStorage.getItem("forgetWordCount")
     ? JSON.parse(localStorage.getItem("forgetWordCount") as string)

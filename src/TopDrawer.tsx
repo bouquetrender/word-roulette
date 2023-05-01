@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Drawer from "./components/drawer";
 import ChangeLesson from "./ChangeLesson";
+import { useDebounceEffect } from "ahooks";
 
 interface TopDrawer {
   open: boolean;
@@ -11,11 +12,11 @@ interface TopDrawer {
 const superTitle = "Word Roulette".toUpperCase();
 const changeLesson = "Change Lesson";
 const exportTitle = "Export";
-const aboutTitle = "about";
+const aboutTitle = "About";
 
 const TopDrawer = (props: TopDrawer) => {
   const [title, setTitle] = useState(superTitle);
-  const [printIt, setPrintIt] = useState("");
+  const [printIt, setPrintIt] = useState("Word Roulette");
 
   const btnList = [
     {
@@ -59,22 +60,26 @@ const TopDrawer = (props: TopDrawer) => {
     setTitle(superTitle);
   };
 
-  useEffect(() => {
-    setPrintIt("");
-    const delay = 20;
-    let i = -1;
+  useDebounceEffect(
+    () => {
+      setPrintIt("");
+      const delay = 20;
+      let i = -1;
 
-    const intervalId = setInterval(() => {
-      if (i >= title.length) {
-        clearInterval(intervalId);
-        return;
-      }
-      setPrintIt((prevVal) => {
-        return prevVal + title.charAt(i);
-      });
-      i++;
-    }, delay);
-  }, [title]);
+      const intervalId = setInterval(() => {
+        if (i >= title.length) {
+          clearInterval(intervalId);
+          return;
+        }
+        setPrintIt((prevVal) => {
+          return prevVal + title.charAt(i);
+        });
+        i++;
+      }, delay);
+    },
+    [title],
+    { wait: 100 }
+  );
 
   return (
     <Drawer
@@ -83,7 +88,7 @@ const TopDrawer = (props: TopDrawer) => {
       onClose={onClose}
       position="top"
     >
-      <div className="h-full w-4/5 min-[1040px]:w-1/2 mx-auto pt-48 pb-48 text-center min-[1040px]:text-left">
+      <div className="h-full w-4/5 min-[1040px]:w-1/2 mx-auto pt-40 pb-40 text-center min-[1040px]:text-left">
         <div className="text-5xl min-[1040px]:text-6xl mb-5 font-raleway select-none h-[60px]">
           {printIt}
         </div>
