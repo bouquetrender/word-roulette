@@ -57,7 +57,7 @@ const useWordManager = () => {
 
   const start = () => {
     if (currentWordGroup.length === 0) {
-      return alert("Please Select Lesson");
+      return alert("The current list of words is empty. Please select again.");
     }
     setState(true);
     setBtnText("Next");
@@ -75,7 +75,6 @@ const useWordManager = () => {
   };
 
   const rouletteNext = () => {
-    console.log(state, currentWordGroup)
     if (state) {
       if (currentWordGroup.length === 0) {
         finish();

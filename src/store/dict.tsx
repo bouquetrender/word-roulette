@@ -1,8 +1,8 @@
-interface Vocabulary {
-  [key: number | string]: {
-    [key: number | string]: string[];
-  };
-}
+/* eslint-disable react-refresh/only-export-components */
+export type Vocabulary = Record<string | number, Record<string | number, string[]>>;
+
+export const MORE = 'More'
+export const FORGOTTEN_WORDS = 'Forgotten Words'
 
 const allVocabulary: Vocabulary = {
   // 第一册
@@ -33,9 +33,25 @@ const allVocabulary: Vocabulary = {
       "stay up late",
     ],
     4: ["firm", "abroad", "a great/large number of", "society"],
+    5: [
+      "pigeno / dove",
+      "urgent",
+      "distant",
+      "distance",
+      "convenience",
+      "absurd",
+      "spare part",
+      "garage",
+      "cover",
+      "obtain",
+      "general",
+    ],
+    6: ["beg", "pollution", "in return for..."],
   },
   // 自定义导入单词数据
-  More: {},
+  [MORE]: {
+    [FORGOTTEN_WORDS]: []
+  },
 };
 
 for (const key in allVocabulary) {

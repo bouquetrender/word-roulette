@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { WordsDispatchContext, WordsContext } from "./store";
 import { ReactSVG } from "react-svg";
 import openFolderSVG from "./assest/openFolder.svg";
+import { MORE } from "./store/dict";
 
 interface Props {
   onBack: () => void;
@@ -12,19 +13,32 @@ interface lessonObj {
   unavailable: boolean;
 }
 
+const fixName = (partKey: string | number, index: number, vk: string[]) => {
+  if (index === 0) {
+    return "ALL";
+  } else if (partKey === MORE) {
+    return vk[index];
+  } else {
+    return index === 0 ? "ALL" : `Lesson${index}`;
+  }
+};
+
 const ChangeLesson = (props: Props) => {
   const dispatch = useContext(WordsDispatchContext);
   const store = useContext(WordsContext);
 
-  const [currSelectPartKey, setCurrSelectPartKey] = useState("2");
+  const [currSelectPartKey, setCurrSelectPartKey] = useState(
+    store.partKey || "2"
+  );
 
   const [currentSelection, setCurrentSelection] = useState(store.lesson);
 
+  const vk = Object.keys(store.vocabulary[currSelectPartKey]);
   const lessonListData: lessonObj[] = Array.from({
-    length: Object.keys(store.vocabulary[currSelectPartKey]).length,
-  }).map((_empty, index) => {
+    length: vk.length,
+  }).map((_item, index) => {
     return {
-      name: index === 0 ? "ALL" : `Lesson${index}`,
+      name: fixName(currSelectPartKey, index, vk),
       unavailable: false,
     };
   });
@@ -32,7 +46,10 @@ const ChangeLesson = (props: Props) => {
   const onConfirm = () => {
     dispatch({
       type: "changeLesson",
-      val: currentSelection,
+      val: {
+        currentSelection,
+        currSelectPartKey,
+      },
     });
     onBack();
   };

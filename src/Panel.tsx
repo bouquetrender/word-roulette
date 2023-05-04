@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { ReactSVG } from "react-svg";
 import { motion } from "framer-motion";
-import ForgetWordsList from "./components/wordList";
+import ForgetWordsList from "./components/forgetWordsList";
 import useWordManager from "./hooks/useWordManager";
 import TopDrawer from "./TopDrawer";
 
@@ -95,7 +95,8 @@ const MainPanel = () => {
 
   const onViewWordMeaning = () => {
     window.open(
-      `https://translate.google.com/?source=gtx&sl=en&tl=zh-CN&text=${currentWord}&op=translate`,
+      // `https://translate.google.com/?source=gtx&sl=en&tl=zh-CN&text=${currentWord}&op=translate`,
+      `https://fanyi.baidu.com/#en/zh/${currentWord}`,
       "_blank"
     );
   };
