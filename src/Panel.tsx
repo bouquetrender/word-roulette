@@ -132,7 +132,7 @@ const MainPanel = () => {
     <Loading spining={loading}>
       <div className="flex flex-col h-screen">
         {/* top */}
-        <div className="flex flex-col flex-shrink-0 h-44 bg-gray-500 items-center justify-center shadow-md z-10 ">
+        <div className="flex flex-col flex-shrink-0 h-44 bg-gray-500 items-center justify-center shadow-md z-10">
           <div className="w-full text-4xl mb-5 text-center font-raleway">
             {title.toUpperCase()}
           </div>

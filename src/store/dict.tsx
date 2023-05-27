@@ -1,8 +1,12 @@
 /* eslint-disable react-refresh/only-export-components */
-export type Vocabulary = Record<string | number, Record<string | number, string[]>>;
+export type Vocabulary = Record<
+  string | number,
+  Record<string | number, string[]>
+>;
 
-export const MORE = 'More'
-export const FORGOTTEN_WORDS = 'Forgotten Words'
+export const SPEC = "Spec";
+export const IMPORT = "Import";
+export const FORGOTTEN_WORDS = "Forgotten Words";
 
 const allVocabulary: Vocabulary = {
   // 第一册
@@ -49,9 +53,10 @@ const allVocabulary: Vocabulary = {
     6: ["beg", "pollution", "in return for..."],
   },
   // 自定义导入单词数据
-  [MORE]: {
-    [FORGOTTEN_WORDS]: []
+  [SPEC]: {
+    [FORGOTTEN_WORDS]: [],
   },
+  [IMPORT]: {},
 };
 
 for (const key in allVocabulary) {

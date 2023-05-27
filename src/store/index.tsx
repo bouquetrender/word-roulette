@@ -1,6 +1,6 @@
 import { createContext, useReducer } from "react";
 import { produce } from "immer";
-import { FORGOTTEN_WORDS, MORE, Vocabulary } from "./dict";
+import { FORGOTTEN_WORDS, SPEC, Vocabulary } from "./dict";
 
 interface WordStore {
   partKey: string;
@@ -23,6 +23,7 @@ const wordsReducer = (store: WordStore, action: any) => {
         draftStore.words = draftStore.vocabulary[currSelectPartKey][lessonKey];
       });
     }
+
     case "initalVocabulary": {
       return produce(store, (draftStore: any) => {
         draftStore.vocabulary = action.val;
@@ -30,6 +31,7 @@ const wordsReducer = (store: WordStore, action: any) => {
         draftStore.words = action.val[draftStore.partKey][0];
       });
     }
+
     case "markAsForget": {
       const updateCountObj = { ...store.forgetWordCount };
       updateCountObj[action.val] = updateCountObj[action.val]
@@ -51,14 +53,16 @@ const wordsReducer = (store: WordStore, action: any) => {
         draftStore.forgetWordCount = sortedWordCount;
       });
     }
+
     case "clearForgetList": {
       localStorage.removeItem("forgetWordCount");
       return produce(store, (draftStore: any) => {
         draftStore.forgetWordCount = {};
-        draftStore.vocabulary[MORE][FORGOTTEN_WORDS] = {};
+        draftStore.vocabulary[SPEC][FORGOTTEN_WORDS] = {};
         draftStore.words = [];
       });
     }
+
     default: {
       throw Error("unknown actions: " + action.type);
     }

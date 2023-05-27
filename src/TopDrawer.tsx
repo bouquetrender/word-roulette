@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import Drawer from "./components/drawer";
 import ChangeLesson from "./ChangeLesson";
-import { useDebounceEffect } from "ahooks";
 
 interface TopDrawer {
   open: boolean;
@@ -62,30 +61,26 @@ const TopDrawer = (props: TopDrawer) => {
 
   useEffect(() => {
     if (!props.open) {
-      setTitle(superTitle)
+      setTitle(superTitle);
     }
-  }, [props.open])
+  }, [props.open]);
 
-  useDebounceEffect(
-    () => {
-      setPrintIt("");
-      const delay = 20;
-      let i = -1;
+  useLayoutEffect(() => {
+    setPrintIt("");
+    const delay = 20;
+    let i = -1;
 
-      const intervalId = setInterval(() => {
-        if (i >= title.length) {
-          clearInterval(intervalId);
-          return;
-        }
-        setPrintIt((prevVal) => {
-          return prevVal + title.charAt(i);
-        });
-        i++;
-      }, delay);
-    },
-    [title],
-    { wait: 100 }
-  );
+    const intervalId = setInterval(() => {
+      if (i >= title.length) {
+        clearInterval(intervalId);
+        return;
+      }
+      setPrintIt((prevVal) => {
+        return prevVal + title.charAt(i);
+      });
+      i++;
+    }, delay);
+  }, [title]);
 
   return (
     <Drawer
@@ -94,8 +89,8 @@ const TopDrawer = (props: TopDrawer) => {
       onClose={onClose}
       position="top"
     >
-      <div className="h-full w-4/5 min-[1040px]:w-1/2 mx-auto pt-40 pb-40 text-left">
-        <div className="text-5xl min-[1040px]:text-6xl mb-5 font-raleway select-none h-[60px]">
+      <div className="h-full w-4/5 min-[1040px]:w-1/2 mx-auto text-left flex justify-center flex-col pt-10 pb-10">
+        <div className="text-5xl min-[1040px]:text-6xl mb-5 font-raleway select-none h-[60px] -mt-6">
           {printIt}
         </div>
 
