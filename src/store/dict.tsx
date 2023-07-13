@@ -51,6 +51,31 @@ const allVocabulary: Vocabulary = {
       "general",
     ],
     6: ["beg", "pollution", "in return for..."],
+    7: [
+      "detective",
+      "precious / valuable",
+      "expect",
+      "parcel",
+      "steal / stole / stolen",
+    ],
+    8: [
+      "compete / competition",
+      "neat",
+      "path",
+      "wooden",
+      "bitterly",
+      "enters for ...",
+    ],
+    9: ["crowd / crowded", "gather", "hand / second hand", "strike"],
+    10: [
+      "musical",
+      "instrument / instrumental",
+      "clavichord / piano",
+      "recently",
+      "damage / destroy / ruin / spoil",
+      "string",
+      "shock",
+    ],
   },
   // 自定义导入单词数据
   [SPEC]: {
