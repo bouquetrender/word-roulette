@@ -20,6 +20,7 @@ const wordsReducer = (store: WordStore, action: any) => {
       return produce(store, (draftStore: WordStore) => {
         draftStore.partKey = currSelectPartKey;
         draftStore.lesson = currentSelection;
+        console.log(currSelectPartKey, lessonKey)
         draftStore.words = draftStore.vocabulary[currSelectPartKey][lessonKey];
       });
     }

@@ -7,6 +7,7 @@ export type Vocabulary = Record<
 export const SPEC = "Spec";
 export const IMPORT = "Import";
 export const FORGOTTEN_WORDS = "Forgotten Words";
+export const SONG = "Song";
 
 const allVocabulary: Vocabulary = {
   // 第一册
@@ -80,6 +81,37 @@ const allVocabulary: Vocabulary = {
   // 自定义导入单词数据
   [SPEC]: {
     [FORGOTTEN_WORDS]: [],
+    [SONG]: [
+      "last aurorally",
+      "enigmatic",
+      "laser beamer",
+      "craft",
+      "marvelous persona",
+      "utopia",
+      "domestic",
+      "overcorrection",
+      "tornado ",
+      "minority",
+      "vacuum",
+      "dynamite",
+      "metamorphose",
+      "syndrome",
+      "symmetry",
+      "subliminal",
+      "tampern",
+      "abnormal",
+      "kaleidoscope",
+      "unravel",
+      "scratch",
+      "egomaniac",
+      "feedback",
+      "memento",
+      "melt",
+      "contrast",
+      "phase",
+      "phrase",
+      "fragile",
+    ],
   },
   [IMPORT]: {},
 };

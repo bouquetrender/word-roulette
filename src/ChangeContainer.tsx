@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { WordsDispatchContext, WordsContext } from "./store";
 import { ReactSVG } from "react-svg";
 import openFolderSVG from "./assest/openFolder.svg";
-import { SPEC } from "./store/dict";
+import { SPEC, IMPORT } from "./store/dict";
 
 interface Props {
   onBack: () => void;
@@ -19,7 +19,7 @@ const defaultWordPart = "2";
 const fixName = (partKey: string | number, index: number, vk: string[]) => {
   if (index === 0) {
     return "ALL";
-  } else if (partKey === SPEC) {
+  } else if (partKey === SPEC || partKey === IMPORT) {
     return vk[index];
   } else {
     return index === 0 ? "ALL" : `Lesson${index}`;
