@@ -1,13 +1,19 @@
+import React, { useContext, useState } from "react";
 import { ChangeEvent, DragEvent } from "react";
 import DownArrow from "./assest/down-arrow.svg";
 import { ReactSVG } from "react-svg";
+import { WordsContext, WordsDispatchContext } from "./store";
+import { IMPORT } from "./store/dict";
+
+export type InjectList = Record<string, string[]>;
 
 interface Props {
-  onSwitch: () => void;
+  onCancel: () => void;
+  onConfirm: () => void;
 }
 
 const downloadExampleFile = () => {
-  fetch("/word.txt")
+  fetch("/word-import-example2.txt")
     .then((response) => response.text())
     .then((content) => {
       const element = document.createElement("a");
@@ -20,7 +26,33 @@ const downloadExampleFile = () => {
     .catch((error) => console.error("Error:", error));
 };
 
-const ImportContainer = (props: Props) => {
+const paragraphToList = (text: string) => {
+  if (text === "") return {};
+
+  const wordParagraph = text.split("# ");
+  const wordList: InjectList = {};
+
+  wordParagraph.forEach((paragraph) => {
+    if (paragraph !== "") {
+      const list = paragraph.split("\n").filter((word) => word !== "");
+      const title = list.splice(0, 1)[0];
+      if (list.length !== 0 && title !== "") {
+        wordList[title] = list;
+      }
+    }
+  });
+
+  return wordList;
+};
+
+const ImportContainer = React.memo((props: Props) => {
+  const store = useContext(WordsContext);
+  const dispatch = useContext(WordsDispatchContext);
+
+  console.log(store);
+
+  const [beforeInjectList, setBeforeInjectList] = useState<InjectList>({});
+
   const onFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] as Blob;
     handleFiles(file);
@@ -42,7 +74,10 @@ const ImportContainer = (props: Props) => {
 
     reader.onload = (e) => {
       const text = e.target?.result as string;
-      console.log(text);
+      setBeforeInjectList({
+        ...beforeInjectList,
+        ...paragraphToList(text),
+      });
     };
 
     reader.onerror = (e) => {
@@ -50,6 +85,32 @@ const ImportContainer = (props: Props) => {
     };
 
     reader.readAsText(file);
+  };
+
+  const handleInjectNewList = () => {
+    const newVocabulary = { ...store.vocabulary };
+
+    const updateImportList = {
+      ...newVocabulary[IMPORT],
+      ...beforeInjectList,
+    };
+    Reflect.deleteProperty(updateImportList, 0);
+
+    const allWord: string[] = Object.keys(updateImportList).reduce(
+      (arr: string[], key) => {
+        arr = [...arr, ...updateImportList[key]];
+        return arr;
+      },
+      []
+    );
+
+    updateImportList[0] = allWord;
+    newVocabulary[IMPORT] = updateImportList;
+
+    dispatch({
+      type: "initalVocabulary",
+      val: newVocabulary,
+    });
   };
 
   return (
@@ -90,7 +151,15 @@ const ImportContainer = (props: Props) => {
       </div>
 
       <div className="mt-2 text-xl text-center">Import List</div>
-      <div className="text-xl border-2 rounded-lg h-2/6 overflow-y-auto p-4 mt-2"></div>
+      <div className="text-xl border-2 rounded-lg h-2/6 overflow-y-auto p-4 mt-2">
+        {Object.keys(beforeInjectList).map((listTitle) => {
+          return (
+            <div className="hover:bg-[#635e57] p-1" key={listTitle}>
+              {listTitle}
+            </div>
+          );
+        })}
+      </div>
 
       <div className="mt-6 text-2xl flex justify-between">
         <a
@@ -99,18 +168,23 @@ const ImportContainer = (props: Props) => {
             downloadExampleFile();
           }}
         >
-          Download Example file
+          Download Example
         </a>
         <div>
           <a
             className="cursor-pointer hover:underline"
-            onClick={props.onSwitch}
+            onClick={() => {
+              props.onCancel();
+            }}
           >
             Back
           </a>
           <a
             className="cursor-pointer hover:underline ml-8"
-            onClick={props.onSwitch}
+            onClick={() => {
+              handleInjectNewList();
+              props.onConfirm();
+            }}
           >
             Confirm
           </a>
@@ -118,6 +192,6 @@ const ImportContainer = (props: Props) => {
       </div>
     </>
   );
-};
+});
 
 export default ImportContainer;

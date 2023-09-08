@@ -1,6 +1,7 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import Drawer from "./components/drawer";
 import ChangeLesson from "./ChangeLesson";
+import About from "./About";
 
 interface TopDrawer {
   open: boolean;
@@ -23,7 +24,7 @@ const TopDrawer = (props: TopDrawer) => {
       content: changeLesson,
       onClick: () => {
         if (!props.gameStarted) {
-          setTitle("Change Lesson");
+          setTitle(changeLesson);
         }
       },
     },
@@ -36,7 +37,7 @@ const TopDrawer = (props: TopDrawer) => {
     {
       content: aboutTitle,
       onClick: () => {
-        console.log();
+        setTitle(aboutTitle);
       },
     },
     {
@@ -55,9 +56,9 @@ const TopDrawer = (props: TopDrawer) => {
     }, 500);
   };
 
-  const onBack = () => {
+  const onBack = useCallback(() => {
     setTitle(superTitle);
-  };
+  }, []);
 
   useEffect(() => {
     if (!props.open) {
@@ -90,7 +91,7 @@ const TopDrawer = (props: TopDrawer) => {
       position="top"
     >
       <div className="h-full w-4/5 min-[1040px]:w-1/2 mx-auto text-left flex justify-center flex-col pt-10 pb-10">
-        <div className="text-5xl min-[1040px]:text-6xl mb-5 font-raleway select-none h-[60px] -mt-6">
+        <div className="text-4xl min-[1040px]:text-6xl mb-5 font-raleway select-none h-[60px] -mt-6">
           {printIt}
         </div>
 
@@ -114,6 +115,7 @@ const TopDrawer = (props: TopDrawer) => {
           ))}
 
         {title === changeLesson && <ChangeLesson onBack={onBack} />}
+        {title === aboutTitle && <About onBack={onBack} />}
       </div>
     </Drawer>
   );

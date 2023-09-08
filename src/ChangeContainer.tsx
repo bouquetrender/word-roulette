@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { WordsDispatchContext, WordsContext } from "./store";
 import { ReactSVG } from "react-svg";
 import openFolderSVG from "./assest/openFolder.svg";
-import { SPEC, IMPORT } from "./store/dict";
+import { NOT_A_LESSON } from "./store/dict";
 
 interface Props {
   onBack: () => void;
@@ -19,7 +19,7 @@ const defaultWordPart = "2";
 const fixName = (partKey: string | number, index: number, vk: string[]) => {
   if (index === 0) {
     return "ALL";
-  } else if (partKey === SPEC || partKey === IMPORT) {
+  } else if (NOT_A_LESSON.includes(partKey as string)) {
     return vk[index];
   } else {
     return index === 0 ? "ALL" : `Lesson${index}`;
@@ -129,7 +129,10 @@ const ChangeContainer = (props: Props) => {
       <div className="mt-6 text-2xl flex justify-between">
         <div>[ {store.lesson} ]</div>
         <div>
-          <span className="cursor-pointer hover:underline" onClick={onSwitch}>
+          <span
+            className="hidden md:inline cursor-pointer hover:underline"
+            onClick={onSwitch}
+          >
             Import
           </span>
           <span

@@ -6,6 +6,8 @@ export type Vocabulary = Record<
 
 export const SPEC = "Spec";
 export const IMPORT = "Import";
+export const NOT_A_LESSON = [IMPORT, SPEC]
+
 export const FORGOTTEN_WORDS = "Forgotten Words";
 export const SONG = "Song";
 

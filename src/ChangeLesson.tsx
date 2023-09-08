@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import ImportContainer from "./ImportContainer";
 import ChangeContainer from "./ChangeContainer";
 
@@ -6,7 +6,7 @@ interface Props {
   onBack: () => void;
 }
 
-const ChangeLesson = (props: Props) => {
+const ChangeLesson = React.memo((props: Props) => {
   const [importSwitch, setImportSwitch] = useState(false);
 
   const onSwitch = (state: boolean) => {
@@ -24,13 +24,16 @@ const ChangeLesson = (props: Props) => {
         />
       ) : (
         <ImportContainer
-          onSwitch={() => {
+          onCancel={() => {
+            onSwitch(false);
+          }}
+          onConfirm={() => {
             onSwitch(false);
           }}
         />
       )}
     </>
   );
-};
+});
 
 export default ChangeLesson;
