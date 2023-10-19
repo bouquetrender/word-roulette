@@ -49,8 +49,6 @@ const ImportContainer = React.memo((props: Props) => {
   const store = useContext(WordsContext);
   const dispatch = useContext(WordsDispatchContext);
 
-  console.log(store);
-
   const [beforeInjectList, setBeforeInjectList] = useState<InjectList>({});
 
   const onFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -154,7 +152,7 @@ const ImportContainer = React.memo((props: Props) => {
       <div className="text-xl border-2 rounded-lg h-2/6 overflow-y-auto p-4 mt-2">
         {Object.keys(beforeInjectList).map((listTitle) => {
           return (
-            <div className="hover:bg-[#635e57] p-1" key={listTitle}>
+            <div className="hover:bg-[#635e57] p-1 cursor-pointer" key={listTitle}>
               {listTitle}
             </div>
           );

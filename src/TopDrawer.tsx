@@ -2,6 +2,7 @@ import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import Drawer from "./components/drawer";
 import ChangeLesson from "./ChangeLesson";
 import About from "./About";
+import Export from "./Export";
 
 interface TopDrawer {
   open: boolean;
@@ -31,7 +32,7 @@ const TopDrawer = (props: TopDrawer) => {
     {
       content: exportTitle,
       onClick: () => {
-        console.log();
+        setTitle(exportTitle)
       },
     },
     {
@@ -116,6 +117,7 @@ const TopDrawer = (props: TopDrawer) => {
 
         {title === changeLesson && <ChangeLesson onBack={onBack} />}
         {title === aboutTitle && <About onBack={onBack} />}
+        {title === exportTitle && <Export onBack={onBack} />}
       </div>
     </Drawer>
   );
