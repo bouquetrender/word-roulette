@@ -13,7 +13,7 @@ const About = React.memo((props: Props) => {
       </div>
 
       <div className="text-2xl pt-4 pb-10">
-        一个用于随机测试单词的自用网页，基于TypeScript、React、TailwindCSS和Vite构建。
+        一个用于测试单词掌握的自用网页，基于 TypeScript、React、TailwindCSS 和 Vite 构建。
       </div>
 
       <div className="mt-6 text-2xl flex justify-between">

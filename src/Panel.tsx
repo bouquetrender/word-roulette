@@ -76,7 +76,7 @@ const MainPanel = () => {
           rouletteNext();
         } else if (event.key.toLocaleLowerCase() === "r") {
           restart();
-        } else if (state && (event.key.toLocaleLowerCase() === "m")) {
+        } else if (state && event.key.toLocaleLowerCase() === "m") {
           onSpeak();
         }
       };
@@ -90,8 +90,9 @@ const MainPanel = () => {
     { wait: 0 }
   );
 
-  const pecent =
-    ((currentWordGroup.length + 1) / (store.words.length + 1)) * 100;
+  let pecent = 0;
+  if (store.words)
+    pecent = ((currentWordGroup.length + 1) / (store.words.length + 1)) * 100;
 
   const onViewWordMeaning = () => {
     window.open(
@@ -258,11 +259,14 @@ const MainPanel = () => {
               </motion.button>
             )}
           </div>
-          <div className="mt-4 mb-4">
-            {!state
-              ? "Loading Completed"
-              : `${currentWordGroup.length + 1}/${store.words.length}`}
-          </div>
+
+          {store.words && (
+            <div className="mt-4 mb-4">
+              {!state
+                ? "Loading Completed"
+                : `${currentWordGroup.length + 1}/${store.words.length}`}
+            </div>
+          )}
 
           <div className="w-56 bg-gray-200 rounded-full h-2.5 rotate-180">
             <div

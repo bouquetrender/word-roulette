@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 import { WordsDispatchContext, WordsContext } from "./store";
 import { ReactSVG } from "react-svg";
 import openFolderSVG from "./assest/openFolder.svg";
-import { NOT_A_LESSON } from "./store/dict";
 
 interface Props {
   onBack: () => void;
@@ -15,16 +14,6 @@ interface lessonObj {
 }
 
 const defaultWordPart = "2";
-
-const fixName = (partKey: string | number, index: number, vk: string[]) => {
-  if (index === 0) {
-    return "ALL";
-  } else if (NOT_A_LESSON.includes(partKey as string)) {
-    return vk[index];
-  } else {
-    return index === 0 ? "ALL" : `Lesson${index}`;
-  }
-};
 
 const ChangeContainer = (props: Props) => {
   const dispatch = useContext(WordsDispatchContext);
@@ -41,7 +30,7 @@ const ChangeContainer = (props: Props) => {
     length: vk.length,
   }).map((_item, index) => {
     return {
-      name: fixName(currSelectPartKey, index, vk),
+      name: index === 0 ? 'All' : vk[index],
       unavailable: false,
     };
   });

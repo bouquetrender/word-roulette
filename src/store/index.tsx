@@ -28,7 +28,7 @@ const wordsReducer = (store: WordStore, action: any) => {
       return produce(store, (draftStore: any) => {
         draftStore.vocabulary = action.val;
         draftStore.lesson = "ALL";
-        draftStore.words = action.val[draftStore.partKey][0];
+        draftStore.words = action.val[draftStore.partKey][0] || [];
       });
     }
 
@@ -70,7 +70,7 @@ const wordsReducer = (store: WordStore, action: any) => {
 };
 
 const initialWordStore: WordStore = {
-  partKey: "2",
+  partKey: "2", // 当前默认选择的词库
   lesson: "ALL",
   vocabulary: {},
   words: [],
